@@ -572,3 +572,4 @@ require_once 'extra-checkout-fields-for-resouces.php';
  */
 require_once 'helper-functions.php';
 require_once 'predefined-grades.php';
+require_once 'user-registration-fields.php';

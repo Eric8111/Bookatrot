@@ -49,6 +49,36 @@ endif;
     <div class="<?php echo esc_attr( $jasy_product_layout ); ?>">
         <div class="row">
             <div class="col-lg-12 col-md-12">
+            
+            <div class="wcfmmp-store-lists-sorting">
+            Sort by: <form class="wcfm-woocommerce-ordering" action="" method="get">
+                    <?php
+                    $selected_filter = '';
+                    if( isset($_GET['filterby']) && $_GET['filterby'] !='' ){
+                        $selected_filter = $_GET['filterby'];
+                    }
+                    $options = array(
+                        '' => 'All',
+                        'wedding' => 'Wedding',
+                        'corporate' => 'Corporate',
+                        'event' => 'Event',
+                        'funeral' => 'Funeral'
+                    );
+                    if( count($options) > 0 ){
+                    ?>
+                    <select id="carriage_filterby" name="filterby" class="orderby">
+                        <?php foreach ($options as $key => $value) {
+                            $selected = '';
+                            if( $key == $selected_filter ){ $selected = 'selected'; }
+                            ?>
+                            <option value="<?php echo $key; ?>" <?php echo $selected; ?> ><?php echo $value; ?></option>
+                        <?php } ?>
+                    </select>
+                    <?php } ?>
+                    
+                </form>
+            </div>
+            <br/><br/>
             <?php
             if ( woocommerce_product_loop() ) {
              ?>
@@ -59,15 +89,27 @@ endif;
                     'post_type' => 'product',
                     'posts_per_page' => 999
                     );
-                if( isset($_GET['type']) && $_GET['type'] !='' ){
-                    $args['tax_query'] = array(
+                $tax_query_arr = array();
+                if( isset($_GET['filterby']) && $_GET['filterby'] !='' ){
+                    $tax_query_arr['relation'] = 'AND';
+                    $tax_query_arr[] = array(
                         array(
                             'taxonomy' => 'product_cat',
                             'field' => 'slug',
-                            'terms' => $_GET['type']
+                            'terms' => $_GET['filterby']
                         )
                     );
                 }
+
+                $tax_query_arr[] = array(
+                    array(
+                        'taxonomy' => 'product_cat',
+                        'field' => 'slug',
+                        'terms' => 'carriage'
+                    )
+                );
+
+                $args['tax_query'] = $tax_query_arr;
                     
                     
                 $loop = new WP_Query( $args );
@@ -105,6 +147,11 @@ endif;
     </div>
 </div>    
  
+<script>
+    jQuery('#carriage_filterby').on('change', function(e) {
+        jQuery(this).parent().submit()
+    });
+</script>
 
 
    <?php

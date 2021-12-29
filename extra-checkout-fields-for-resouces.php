@@ -3,7 +3,7 @@
  * @snippet       Add Custom Field @ WooCommerce Checkout Page
  */
 function nls_add_custom_checkout_field( $checkout ) {
-    echo '<h3>' . __('Horse Details') . '</h3>';
+    echo '<h3>' . __('Person Details') . '</h3>';
     foreach ( WC()->cart->get_cart() as $cart_item ) {
         $product = $cart_item['data'];
         $booking_persons = isset($cart_item['booking']['Persons']) ? $cart_item['booking']['Persons'] : 1;

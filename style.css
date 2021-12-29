@@ -239,3 +239,11 @@ flex-direction: column-reverse;
 label.tfa_enable_radio_label { color: #777777; }
 #navbarSupportedContent { justify-content: flex-end !important; }
 #payment ul.wc_payment_methods li label { color: #777; }
+body.woocommerce-account .woocommerce-form-login span.password-input,
+body.woocommerce-account .woocommerce-form-register span.password-input{
+    width:100%;
+}
+body.woocommerce-account .woocommerce-form-login span.password-input span.show-password-input,
+body.woocommerce-account .woocommerce-form-register span.password-input span.show-password-input {
+    top:25%;
+}
